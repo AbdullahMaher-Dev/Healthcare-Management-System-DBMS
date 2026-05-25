@@ -1,8 +1,7 @@
-
--- SELECT all patients
+-- Show all patients
 SELECT * FROM Patient;
 
--- JOIN: Appointments with patient and doctor names
+-- Appointments with patient and doctor names
 SELECT 
   a.AppointmentID,
   p.First_Name AS PatientName,
@@ -14,7 +13,7 @@ FROM Appointment a
 JOIN Patient p ON a.PatientID = p.PatientID
 JOIN Doctor d ON a.DoctorID = d.DoctorID;
 
--- JOIN: Prescriptions with medications
+-- Prescriptions with medications
 SELECT 
   pr.PrescriptionID,
   p.First_Name AS PatientName,
@@ -25,7 +24,7 @@ JOIN Patient p ON pr.PatientID = p.PatientID
 JOIN Prescription_Medication pm ON pr.PrescriptionID = pm.PrescriptionID
 JOIN Medication m ON pm.MedicationID = m.MedicationID;
 
--- GROUP BY: Total payment per patient
+-- Total payments per patient
 SELECT 
   p.First_Name,
   SUM(pay.Amount) AS TotalPaid
@@ -33,7 +32,7 @@ FROM Payment pay
 JOIN Patient p ON pay.PatientID = p.PatientID
 GROUP BY p.First_Name;
 
--- SUBQUERY: Patient who paid the highest amount
+-- Patient with highest payment
 SELECT 
   p.First_Name,
   pay.Amount
@@ -43,21 +42,21 @@ WHERE pay.Amount = (
   SELECT MAX(Amount) FROM Payment
 );
 
--- UPDATE: Change status of an appointment
+-- Cancel an appointment
 UPDATE Appointment
 SET Status = 'Cancelled'
 WHERE AppointmentID = 1002;
 
--- DELETE: Delete a prescription
+-- Delete a prescription
 DELETE FROM Prescription
 WHERE PrescriptionID = 202;
 
--- SELECT: All cardiology doctors
+-- Show cardiology doctors
 SELECT * FROM Doctor
 WHERE Specialization = 'Cardiology';
 
--- COUNT: Total number of patients
+-- Count patients
 SELECT COUNT(*) AS NumberOfPatients FROM Patient;
 
--- SELECT: Medications and their dosages
+-- Show medications and dosages
 SELECT Name, Dosage FROM Medication;
